@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<style type="text/css">
+		
+		ul li.yiji {
+			list-style-image: url(img/-.gif);
+		}
+	</style>
+
+	<body>
+		<ul>
+			<li class="yiji">主题市场
+				<ul>
+					<li>运动派
+						<ul>
+							<li>三级菜单a</li>
+							<li>三级菜单b</li>
+							<li>三级菜单c</li>
+							<li>三级菜单d</li>
+						</ul>
+					</li>
+					<li>有车族
+						<ul>
+							<li>三级
+								<ul>
+									<li>四级</li>
+									<li>四级</li>
+									<li>四级</li>
+								</ul>
+							</li>
+							<li>三级</li>
+							<li>三级</li>
+							<li>三级</li>
+						</ul>
+					</li>
+					<li>生活家</li>
+				</ul>
+			</li>
+			<li class="yiji">特色购物
+				<ul>
+					<li>淘宝二手</li>
+					<li>拍卖会</li>
+					<li>爱逛街</li>
+					<li>全球购</li>
+					<li>淘女郎</li>
+				</ul>
+			</li>
+			<li class="yiji">优惠促销
+				<ul>
+					<li>天天特价</li>
+					<li>免费试用</li>
+					<li>清仓</li>
+					<li>1元起拍</li>
+				</ul>
+			</li>
+			<li>工具</li>
+		</ul>
+		<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+		<script type="text/javascript">
+			//has()匹配含有选择器所匹配的元素的元素
+			//is()根据选择器、元素或 jQuery 对象来检测匹配元素集合
+			$(function() {
+				$("li:has(ul)").click(function(event) {//为包含ul元素的li定义点击事件
+					if (this == event.target) {//判断点击当前li是否触发的目标对象
+						
+						if($(this).children().is(":hidden")){
+							$(this).css("list-style-image", "url(img/-.gif)")
+						} else {
+							$(this).css("list-style-image", "url(img/1.gif)")
+						}
+						$(this).children().toggle("slow");
+						
+					}
+				});
+				$("li:not(:has(ul))").css("list-style","none");
+			});
+		</script>
+
+	</body>
+
+</html>

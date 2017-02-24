@@ -1,0 +1,100 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+#header img{
+	width: 100%;
+}
+
+#nav img{
+	display: block;
+	width: 100%;
+	
+	}
+	
+#part {
+	width: 100%;
+	height: 419px;
+	background: url(../img/timeGo.png);
+	
+}
+#part .partCon {
+	width: 1200px;
+	height: 419px;
+	background: green;
+	margin: 0 auto;
+	
+	
+}
+#part .partCon .left {
+	float: left;
+}
+#part .partCon .right {
+	float: right;
+}
+#part .partCon .banner {
+	float: left;
+	width: 820px;
+	height: 419px;
+
+	position: relative;
+}
+#part .partCon .banner a {
+	width: 71px;
+	height: 71px;
+	display: none;	
+	
+	position: absolute;
+	top: 180px;
+	z-index: 2;
+}
+#part .partCon .banner a.prev {
+	left: -35px;
+	background: url(../img/but.png) -71px 0px;
+	
+}
+#part .partCon .banner a.prev:hover {
+	background-position: 0 0;
+}
+#part .partCon .banner a.next {
+	right: -35px;
+	background: url(../img/but.png) -71px -71px;
+	}
+	#part .partCon .banner a.next:hover {
+	background-position: 0 -71px;
+}
+#part .partCon .banner .scroll {
+		width: 820px;
+		height: 419px;
+		background: #abcdef;
+		position: relative;
+		overflow: hidden;
+}
+#part .partCon .banner .scroll img {
+	position: absolute;
+	left: 820px;
+	
+}
+#part .partCon .banner .scroll img.first {
+	left: 0;
+}
+#part .partCon .banner .btn {
+	width: 150px;
+	height: 20px;
+	position: absolute;
+	background: rgba(0,0,0,0.5);
+	left: 340px;
+	bottom: 10px;
+	border-radius: 20px;
+	text-align: center;
+}
+#part .partCon .banner .btn span {
+	width: 10px;
+	height: 10px;
+	background: #666;
+	border-radius: 5px;
+	display: inline-block;
+}
+#part .partCon .banner .btn span.hover {
+	background: #ff0099;
+}

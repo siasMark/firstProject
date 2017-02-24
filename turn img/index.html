@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+
+		<link rel="stylesheet" type="text/css" href="css/new_file.css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<img src="img/header.png" />
+		</div>
+
+		<div id="nav">
+			<img src="img/nav.png" />
+		</div>
+
+		<div id="part">
+			<div class="partCon">
+				<div class="left"><img src="img/left.png" /></div>
+				<div class="banner">
+
+					<a href="javascript:void(0)" class="prev"></a>
+					<a href="javascript:void(0)" class="next"></a>
+
+					<div class="scroll">
+						<img class="first" src="img/flash1.jpg" />
+						<img src="img/flash2.jpg" />
+						<img src="img/flash3.jpg" />
+						<img src="img/flash4.jpg" />
+						<img src="img/flash5.png" />
+						<img src="img/flash6.jpg" />
+
+					</div>
+
+					<div class="btn">
+						<span class="hover"></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+
+				</div>
+				<div class="right"><img src="img/right.png" /></div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				
+				var clearTime = null;// 
+				var $index = 0; // 当前索引
+				var $qiandex = 0; // 前一张图片的索引
+				
+				/***************************************
+				1. 显示广告动画两边的前进和后退按钮
+					通过hover事件进行处理
+				***************************************/
+				$(".banner").hover(
+					// 鼠标移动到所选元素.banner时执行的函数
+					function(){
+						// 显示.prev和.next两个图片
+						$(" .prev,.next").stop().fadeIn(500);
+					},
+					// 鼠标移出所选元素时.banner执行的函数
+					function(){
+						// 隐藏.prev和.next两个图片
+						$(" .prev,.next").stop().fadeOut(500);
+					}
+				);
+
+				/***********************************************
+				 2. 滚动播放效果
+				************************************************/
+				function scrollPlay() {
+					/********************************************** 
+						1.获取当前正在选中执行的【小圆点】索引
+						2.addClass("hover")给当前【小圆点】设置hover样式
+						3.sibings().removeClass("hover")并移除掉其他兄弟元素的hover样式
+					************************************************/
+					$(".btn span").eq($index).addClass("hover").siblings().removeClass("hover");
+
+					/**********************************************
+					    1.图片滚动效果的实现
+						图片的展示顺序是0~5，共6张图片
+						正常情况前一张图片和后一张图片的索引 $qiandex + 1 = $index
+						
+					**********************************************/
+					
+					if ($index == 0 && $qiandex == 5) {/** 第一张图片 **/
+						/*****************************************
+						【特殊处理：】主要是处理当前显示的最后一张图片
+						点击下一张图片链接
+						要动画【从左向右】展示第一张图片的动画效果
+						*****************************************/
+						/*
+						这是隐藏前一张图片的动画：
+						前一张图片，从当前位置，通过动画效果移动到left:-820的位置
+						超出包含图片的div就会隐藏。
+						*/
+						$(".scroll img").eq($qiandex).stop(true, true).animate({
+							"left": "-820px"
+						});
+						/*
+						这是显示当前图片的动画：
+						首先将图片绝对定位到left:820px位置，就是包含图片div的右方
+						然后让图片运动到指定的left:0的位置，展现出图片进入的效果
+						*/
+						$(".scroll img").eq($index).css("left", "820px").stop(true, true).animate({
+							"left": "0"
+						});
+					}else if($index == 5 && $qiandex == 0) {/** 最后一张图片 **/
+						/****************************************
+						【特殊处理：】主要是处理当前显示第一张图片；
+						点击上一张图片链接
+						要动画【从右向左】展示最后一张图片的动画效果
+						****************************************/
+						$(".scroll img").eq($qiandex).stop(true, true).animate({
+							"left": "820px"
+						});
+						$(".scroll img").eq($index).css("left", "-820px").stop(true, true).animate({
+							"left": "0"
+						});
+					} else if ($index > $qiandex) { //左移
+						/**************
+						正常情况下
+
+						顺序显示图片；
+						1.包括点击了下一张链接.next
+						2.用户鼠标挪动到了后面图片的span上时
+
+						向左隐藏前一张图片,前一张图片动画【从右向左】到left:-820px;
+						当前图片先绝对定位到div右边left:820px，然后动画【从右向左】到left:0
+						**************/
+						$(".scroll img").eq($qiandex).stop(true, true).animate({
+							"left": "-820px"
+						});
+						$(".scroll img").eq($index).css("left", "820px").stop(true, true).animate({
+							"left": "0"
+						});
+					} else if ($index < $qiandex) { //右移
+						/**************
+						其他情况下
+
+						倒序显示图片
+						1. 用户点击了前一张图片链接.prev时
+						2. 用户鼠标挪动到了前面图片的span上时
+
+						向右隐藏前一张图片,前一张图片动画【从左向右】到left:820px隐藏;
+						当前图片先绝对定位到div左边left:-820px，然后动画【从左向右】到left:0
+						**************/
+						$(".scroll img").eq($qiandex).stop(true, true).animate({
+							"left": "820px"
+						});
+						$(".scroll img").eq($index).css("left", "-820px").stop(true, true).animate({
+							"left": "0"
+						});
+					}
+				}
+					
+				/*********************************************
+				 3. 设置自动播放效果：图片循环播放
+				*********************************************/
+				function autoPlay() {
+					// 使用setInterval(fn, timeout)函数进行间隔调用
+					clearTime = setInterval(function() {
+						$index++;// 默认当前索引自增1，播放下一张图片
+						if ($index > 5) {// 如果已经是最后一张图片
+							$index = 0;// 重新设置要播放的图片索引为第一张图片$index=0
+							$qiandex = 5;// 重新设置上一张图片索引为最后一张图片$qiandex=5
+						}
+						// 调用函数执行图片滚动动画
+						scrollPlay();
+						// 更新索引，将当前图片索引值，赋值给上一张图片索引值
+						$qiandex = $index;
+					}, 3500);
+					
+				}
+				// 开始自动播放
+				autoPlay();
+				
+				
+				/************************************************
+				4. 用户点击.next下一张图片的按钮，顺序显示图片
+				当前图片的索引$index++，然后调用scrollPlay()即可！
+				*************************************************/
+				$(".banner .next").click(function() {
+					$index++;// 索引自增1
+					if ($index > 5) {
+						/* 
+						如果当前索引已经是最后一张图片
+						将当前索引设置为1；前一张图片索引设置为5
+						*/
+						$index = 0;
+						$qiandex = 5;
+					}
+					// 执行动画滚动
+					scrollPlay()
+					// 执行完成，前一张图片索引值设置为当前图片的索引值
+					$qiandex = $index;
+					// 清除timeout
+					clearInterval(clearTime);
+					// 重新从当前位置自动播放
+					autoPlay();
+				});
+
+				/************************************************
+				5. 用户点击.prev前一张图片的按钮，倒序显示图片
+				当前图片的索引$index--，然后调用scrollPlay()即可！
+				*************************************************/
+				$(".banner .prev").click(function() {
+					$index--;// 索引自减1
+					if ($index < 0) {
+						/*
+						如果当前已经是第一张图片【$index-- < 0】
+						点击前一张图片时，显示最后一张图片
+						所以当前索引值$index = 5；将前一张图片索引$qiandex = 0;
+						*/
+						$index = 5;
+						$qiandex = 0;
+					}
+					// 调用函数播放动画
+					scrollPlay()
+					// 设置前一张索引值为当前索引
+					$qiandex = $index;
+					// 清楚timeout
+					clearInterval(clearTime);
+					// 重新从当前位置自动播放
+					autoPlay();
+				});
+				
+				/***********************************************
+					6.悬停展示动画效果
+				***********************************************/
+				$(".btn span").mouseover(function() {
+					clearInterval(clearTime);// 
+					$index = $(this).index(); //获取当前【小圆点】序列号
+					scrollPlay();
+					$qiandex = $index; //把当前的值赋给下一次的前一个序列号
+				}).mouseout(function(){
+					autoPlay();// 鼠标移出时自动播放
+				});
+			});
+		</script>
+
+	</body>
+
+</html>
